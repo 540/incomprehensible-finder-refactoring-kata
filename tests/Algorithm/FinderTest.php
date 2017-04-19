@@ -26,19 +26,19 @@ final class FinderTest extends TestCase
     protected function setUp()
     {
         $this->sue            = new Thing();
-        $this->sue->name      = "Sue";
+        $this->sue->nameString      = "Sue";
         $this->sue->birthDate = new \DateTime("1950-01-01");
 
         $this->greg            = new Thing();
-        $this->greg->name      = "Greg";
+        $this->greg->nameString      = "Greg";
         $this->greg->birthDate = new \DateTime("1952-05-01");
 
         $this->sarah            = new Thing();
-        $this->sarah->name      = "Sarah";
+        $this->sarah->nameString      = "Sarah";
         $this->sarah->birthDate = new \DateTime("1982-01-01");
 
         $this->mike            = new Thing();
-        $this->mike->name      = "Mike";
+        $this->mike->nameString      = "Mike";
         $this->mike->birthDate = new \DateTime("1979-01-01");
     }
 

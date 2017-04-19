@@ -9,19 +9,19 @@ use DateTime;
 final class Thing
 {
     /** @var string */
-    public $name;
+    public $nameString;
 
     /** @var DateTime */
     public $birthDate;
 
-    public function getName(): string
+    public function getNameString(): string
     {
-        return $this->name;
+        return $this->nameString;
     }
 
-    public function setName(string $name)
+    public function setNameString(string $nameString)
     {
-        $this->name = $name;
+        $this->nameString = $nameString;
     }
 
     public function getBirthDate(): DateTime
