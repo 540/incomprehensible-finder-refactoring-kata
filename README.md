@@ -1,3 +1,6 @@
+## :warning: NOTICE !!
+This kata have been edited to work around Clean Code book chapters 2 and 3. So various bad naming and function examples have been added. 
+
 # Introduction 
 
 Here is the bad news: the new developer you hired has written some terrible, atrocious code. 
