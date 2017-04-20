@@ -12,7 +12,7 @@ final class Thing
     public $nameString;
 
     /** @var DateTime */
-    public $birthDate;
+    public $bthdt;
 
     public function getNameString(): string
     {
@@ -24,13 +24,13 @@ final class Thing
         $this->nameString = $nameString;
     }
 
-    public function getBirthDate(): DateTime
+    public function fetchBthdt(): DateTime
     {
-        return $this->birthDate;
+        return $this->bthdt;
     }
 
-    public function setBirthDate(DateTime $birthDate)
+    public function setBthdt(DateTime $bthdt)
     {
-        $this->birthDate = $birthDate;
+        $this->bthdt = $bthdt;
     }
 }

@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace CodelyTV\FinderKataTest\Algorithm;
 
-use CodelyTV\FinderKata\Algorithm\Finder;
-use CodelyTV\FinderKata\Algorithm\FT;
+use CodelyTV\FinderKata\Algorithm\FindManager;
+use CodelyTV\FinderKata\Algorithm\FTInterface;
 use CodelyTV\FinderKata\Algorithm\Thing;
 use PHPUnit\Framework\TestCase;
 
-final class FinderTest extends TestCase
+final class FindManagerTest extends TestCase
 {
     /** @var Thing */
     private $sue;
@@ -27,28 +27,28 @@ final class FinderTest extends TestCase
     {
         $this->sue            = new Thing();
         $this->sue->nameString      = "Sue";
-        $this->sue->birthDate = new \DateTime("1950-01-01");
+        $this->sue->bthdt = new \DateTime("1950-01-01");
 
         $this->greg            = new Thing();
         $this->greg->nameString      = "Greg";
-        $this->greg->birthDate = new \DateTime("1952-05-01");
+        $this->greg->bthdt = new \DateTime("1952-05-01");
 
         $this->sarah            = new Thing();
         $this->sarah->nameString      = "Sarah";
-        $this->sarah->birthDate = new \DateTime("1982-01-01");
+        $this->sarah->bthdt = new \DateTime("1982-01-01");
 
         $this->mike            = new Thing();
         $this->mike->nameString      = "Mike";
-        $this->mike->birthDate = new \DateTime("1979-01-01");
+        $this->mike->bthdt = new \DateTime("1979-01-01");
     }
 
     /** @test */
     public function should_return_empty_when_given_empty_list()
     {
         $list   = [];
-        $finder = new Finder($list);
+        $manager = new FindManager($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $manager->find(FTInterface::ONE);
 
         $this->assertEquals(null, $result->p1);
         $this->assertEquals(null, $result->p2);
@@ -59,9 +59,9 @@ final class FinderTest extends TestCase
     {
         $list   = [];
         $list[] = $this->sue;
-        $finder = new Finder($list);
+        $manager = new FindManager($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $manager->find(FTInterface::ONE);
 
         $this->assertEquals(null, $result->p1);
         $this->assertEquals(null, $result->p2);
@@ -73,9 +73,9 @@ final class FinderTest extends TestCase
         $list   = [];
         $list[] = $this->sue;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $manager = new FindManager($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $manager->find(FTInterface::ONE);
 
         $this->assertEquals($this->sue, $result->p1);
         $this->assertEquals($this->greg, $result->p2);
@@ -87,9 +87,9 @@ final class FinderTest extends TestCase
         $list   = [];
         $list[] = $this->mike;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $manager = new FindManager($list);
 
-        $result = $finder->find(FT::TWO);
+        $result = $manager->find(FTInterface::TWO);
 
         $this->assertEquals($this->greg, $result->p1);
         $this->assertEquals($this->mike, $result->p2);
@@ -103,9 +103,9 @@ final class FinderTest extends TestCase
         $list[] = $this->sarah;
         $list[] = $this->mike;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $manager = new FindManager($list);
 
-        $result = $finder->find(FT::TWO);
+        $result = $manager->find(FTInterface::TWO);
 
         $this->assertEquals($this->sue, $result->p1);
         $this->assertEquals($this->sarah, $result->p2);
@@ -121,9 +121,9 @@ final class FinderTest extends TestCase
         $list[] = $this->sarah;
         $list[] = $this->mike;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $manager = new FindManager($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $manager->find(FTInterface::ONE);
 
         $this->assertEquals($this->sue, $result->p1);
         $this->assertEquals($this->greg, $result->p2);
