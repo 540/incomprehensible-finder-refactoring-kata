@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace CodelyTV\FinderKata\Algorithm;
 
@@ -13,5 +13,5 @@ final class CoupleAgeDifference
     public $oldest;
 
     /** @var int */
-    public $difference;
+    public $differenceInSeconds;
 }

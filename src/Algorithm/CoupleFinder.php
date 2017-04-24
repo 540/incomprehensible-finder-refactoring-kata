@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace CodelyTV\FinderKata\Algorithm;
 
@@ -9,57 +9,68 @@ final class CoupleFinder
     /** @var Person[] */
     private $people;
 
-        public function __construct(array $people)
+    /**
+     * @param Person[] $people
+     */
+    public function __construct(array $people)
     {
         $this->people = $people;
     }
 
-    public function find(int $criteria): CoupleAgeDifference
+    /**
+     * @param AgeFindCriteria $criteria
+     *
+     * @return CoupleAgeDifference
+     */
+    public function find(AgeFindCriteria $criteria): CoupleAgeDifference
+    {
+        $coupleAgeDifferences = $this->buildAgeDifferencesByCouple();
+
+        if (empty($coupleAgeDifferences)) {
+            return new CoupleAgeDifference();
+        }
+
+        return $criteria->apply($coupleAgeDifferences);
+    }
+
+    /**
+     * @return CoupleAgeDifference[]
+     */
+    private function buildAgeDifferencesByCouple(): array
     {
         /** @var CoupleAgeDifference[] $couples */
         $couples = [];
 
-        for ($i = 0; $i < count($this->people); $i++) {
-            for ($j = $i + 1; $j < count($this->people); $j++) {
-                $couple = new CoupleAgeDifference();
-
-                if ($this->people[$i]->birthDate < $this->people[$j]->birthDate) {
-                    $couple->youngest = $this->people[$i];
-                    $couple->oldest = $this->people[$j];
-                } else {
-                    $couple->youngest = $this->people[$j];
-                    $couple->oldest = $this->people[$i];
-                }
-
-                $couple->difference = $couple->oldest->birthDate->getTimestamp()
-                    - $couple->youngest->birthDate->getTimestamp();
-
-                $couples[] = $couple;
+        for ($i = 0; $i < count($this->people); $i ++) {
+            for ($j = $i + 1; $j < count($this->people); $j ++) {
+                $couples[] = $this->buildAgeDifferenceForCouple($this->people[$i], $this->people[$j]);
             }
         }
 
-        if (count($couples) >= 1) {
-            $bestCouple = $couples[0];
+        return $couples;
+    }
 
-            foreach ($couples as $aCouple) {
-                switch ($criteria) {
-                    case AgeFindCriteria::CLOSEST:
-                        if ($aCouple->difference < $bestCouple->difference) {
-                            $bestCouple = $aCouple;
-                        }
-                        break;
+    /**
+     * @param Person $person1
+     * @param Person $person2
+     *
+     * @return CoupleAgeDifference
+     */
+    private function buildAgeDifferenceForCouple(Person $person1, Person $person2)
+    {
+        $couple = new CoupleAgeDifference();
 
-                    case AgeFindCriteria::FURTHEST:
-                        if ($aCouple->difference > $bestCouple->difference) {
-                            $bestCouple = $aCouple;
-                        }
-                        break;
-                }
-            }
+        if ($person1->birthDate < $person2->birthDate) {
+            $couple->youngest = $person1;
+            $couple->oldest = $person2;
         } else {
-            $bestCouple = new CoupleAgeDifference();
+            $couple->youngest = $person2;
+            $couple->oldest = $person1;
         }
 
-        return $bestCouple;
+        $couple->differenceInSeconds = $couple->oldest->birthDate->getTimestamp()
+            - $couple->youngest->birthDate->getTimestamp();
+
+        return $couple;
     }
 }
