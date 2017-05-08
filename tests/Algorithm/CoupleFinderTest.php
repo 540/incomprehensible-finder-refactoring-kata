@@ -25,21 +25,13 @@ final class CoupleFinderTest extends TestCase
 
     protected function setUp()
     {
-        $this->sue = new Person();
-        $this->sue->name = "Sue";
-        $this->sue->birthDate = new \DateTime("1950-01-01");
+        $this->sue = new Person("Sue", new \DateTime("1950-01-01"));
 
-        $this->greg = new Person();
-        $this->greg->name = "Greg";
-        $this->greg->birthDate = new \DateTime("1952-05-01");
+        $this->greg = new Person("Greg", new \DateTime("1952-05-01"));
 
-        $this->sarah = new Person();
-        $this->sarah->name = "Sarah";
-        $this->sarah->birthDate = new \DateTime("1982-01-01");
+        $this->sarah = new Person("Sarah", new \DateTime("1982-01-01"));
 
-        $this->mike = new Person();
-        $this->mike->name = "Mike";
-        $this->mike->birthDate = new \DateTime("1979-01-01");
+        $this->mike = new Person("Mike", new \DateTime("1979-01-01"));
     }
 
     /** @test */
@@ -50,8 +42,7 @@ final class CoupleFinderTest extends TestCase
 
         $result = $finder->find(AgeFindCriteria::closest());
 
-        $this->assertEquals(null, $result->youngest);
-        $this->assertEquals(null, $result->oldest);
+        $this->assertFalse($result->isAvailable());
     }
 
     /** @test */
@@ -63,8 +54,7 @@ final class CoupleFinderTest extends TestCase
 
         $result = $finder->find(AgeFindCriteria::closest());
 
-        $this->assertEquals(null, $result->youngest);
-        $this->assertEquals(null, $result->oldest);
+        $this->assertFalse($result->isAvailable());
     }
 
     /** @test */
@@ -77,8 +67,9 @@ final class CoupleFinderTest extends TestCase
 
         $result = $finder->find(AgeFindCriteria::closest());
 
-        $this->assertEquals($this->sue, $result->youngest);
-        $this->assertEquals($this->greg, $result->oldest);
+        $this->assertTrue($result->isAvailable());
+        $this->assertEquals($this->sue, $result->youngest());
+        $this->assertEquals($this->greg, $result->oldest());
     }
 
     /** @test */
@@ -91,8 +82,9 @@ final class CoupleFinderTest extends TestCase
 
         $result = $finder->find(AgeFindCriteria::furthest());
 
-        $this->assertEquals($this->greg, $result->youngest);
-        $this->assertEquals($this->mike, $result->oldest);
+        $this->assertTrue($result->isAvailable());
+        $this->assertEquals($this->greg, $result->youngest());
+        $this->assertEquals($this->mike, $result->oldest());
     }
 
     /** @test */
@@ -107,8 +99,9 @@ final class CoupleFinderTest extends TestCase
 
         $result = $finder->find(AgeFindCriteria::furthest());
 
-        $this->assertEquals($this->sue, $result->youngest);
-        $this->assertEquals($this->sarah, $result->oldest);
+        $this->assertTrue($result->isAvailable());
+        $this->assertEquals($this->sue, $result->youngest());
+        $this->assertEquals($this->sarah, $result->oldest());
     }
 
     /**
@@ -125,7 +118,8 @@ final class CoupleFinderTest extends TestCase
 
         $result = $finder->find(AgeFindCriteria::closest());
 
-        $this->assertEquals($this->sue, $result->youngest);
-        $this->assertEquals($this->greg, $result->oldest);
+        $this->assertTrue($result->isAvailable());
+        $this->assertEquals($this->sue, $result->youngest());
+        $this->assertEquals($this->greg, $result->oldest());
     }
 }

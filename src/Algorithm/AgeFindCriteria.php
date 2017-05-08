@@ -36,7 +36,7 @@ class AgeFindCriteria
     {
         return new self(
             function ($couple1, $couple2) {
-                return $couple1->differenceInSeconds > $couple2->differenceInSeconds;
+                return $couple1->isDifferenceBiggerThan($couple2);
             }
         );
     }
@@ -48,7 +48,7 @@ class AgeFindCriteria
     {
         return new self(
             function ($couple1, $couple2) {
-                return $couple1->differenceInSeconds < $couple2->differenceInSeconds;
+                return $couple1->isDifferenceSmallerThan($couple2);
             }
         );
     }
